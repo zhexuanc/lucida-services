@@ -19,6 +19,19 @@ check_valid () {
 	fi
 }
 
+create_folder () {
+	cp -rf template/$1 .
+	mv $1 $2
+	CLASS_PATH="$PWD"/"$2"/class.txt
+	cd $2
+	find ./ -type f -exec sed -i "s/template/$2/g" {} \;
+	find ./ -type f -exec sed -i "s/TPL/$3/g" {} \;
+	find . -depth -name '*template*' -execdir rename "s/template/$2/g" {} \;
+	find . -depth -name '*TPL*' -execdir rename "s/TPL/$3/g" {} \;
+	cd ..
+	echo "[Info] Template folder is ready!"
+}
+
 OP=""
 if [ "$1" = "add" ]; then
 	OP="add"
@@ -70,30 +83,35 @@ if [ "$OP" = "add" ]; then
 	read LAN
 
 	echo ""
-	HOST_VALID=1
-	while [ $HOST_VALID -ne 0 ]; do
-		echo "### Specify the host/port information for your service. "
-		printf "### Enter the host: "
-		read HOST
-		if [ "$HOST" = "" ]; then
-			echo "[Error] Service host cannot be empty! Please try another one!"
-		else
-			HOST_VALID=0
-		fi
-	done
-
-	PORT_VALID=1
-	while [ $PORT_VALID -ne 0 ]; do
-		printf "### Enter the port: "
-		read PORT
-		if [ "$PORT" = "" ]; then
-			echo "[Error] Service port cannot be empty! Please try another one!"
-		else
-			check_valid HOST_PORT $HOST $PORT
-			PORT_VALID=$?
-			if [ $PORT_VALID -ne 0 ]; then
-				echo "[Error] Service host/port pair already used! Please try another one!"
+	HOST_PORT_VALID=1
+	while [ $HOST_PORT_VALID -ne 0 ]; do
+		HOST_VALID=1
+		while [ $HOST_VALID -ne 0 ]; do
+			echo "### Specify the host/port information for your service. "
+			printf "### Enter the host: "
+			read HOST
+			if [ "$HOST" = "" ]; then
+				echo "[Error] Service host cannot be empty! Please try another one!"
+			else
+				HOST_VALID=0
 			fi
+		done
+
+		PORT_VALID=1
+		while [ $PORT_VALID -ne 0 ]; do
+			printf "### Enter the port: "
+			read PORT
+			if [ "$PORT" = "" ]; then
+				echo "[Error] Service port cannot be empty! Please try another one!"
+			else
+				PORT_VALID=0
+			fi
+		done
+		
+		check_valid HOST_PORT $HOST $PORT
+		HOST_PORT_VALID=$?
+		if [ $HOST_PORT_VALID -ne 0 ]; then
+			echo "[Error] Service host/port pair already used! Please try another one!"
 		fi
 	done
 
@@ -110,48 +128,32 @@ if [ "$OP" = "add" ]; then
 		fi
 	done
 
-	python service_mongo.py add $NAME $ACN $HOST $PORT $INPUT
-
-	if [ "$LAN" = "C++" -o "$LAN" = "cpp" ]; then
+	if [ "$LAN" = "cpp" -o "$LAN" = "java" -o "$LAN" = "python" ]; then
 		# do copy template folder of cpp to lucida
 		cd ../lucida ; \
 		if [ -d $NAME ]; then
 			echo "[Error] service already exists!"
+			exit 1
 		else
-			cp -rf template/cpp .
-			mv cpp $NAME
-			echo "[Info] Template folder is ready cpp!"
-		fi
-	elif [ "$LAN" = "Java" -o "$LAN" = "java" ]; then
-		# do copy template folder of java to lucida
-		cd ../lucida ; \
-		if [ -d $NAME ]; then
-			echo "[Error] service already exists!"
-		else
-			cp -rf template/java .
-			mv java $NAME
-			echo "[Info] Template folder is ready java!"
-		fi
-	elif [ "$LAN" = "Python" -o "$LAN" = "python" ]; then
-		# do copy template folder of python to lucida
-		cd ../lucida ; \
-		if [ -d $NAME ]; then
-			echo "[Error] service already exists!"
-		else
-			cp -rf template/python .
-			mv python $NAME
-			echo "[Info] Template folder is ready python!"
+			create_folder $LAN $NAME $ACN
 		fi
 	else
 		# create an empty folder
 		cd ../lucida ; \
 		if [ -d $NAME ]; then
 			echo "[Error] service already exists!"
+			exit 1
 		else
 			mkdir $NAME
+			touch "$NAME"/class.txt
+			CLASS_PATH="$PWD"/"$NAME"/class.txt
 			echo "[Info] Template folder is ready!"
 		fi
 	fi
+
+	cd ../tools
+	python service_mongo.py add $NAME $ACN $HOST $PORT $INPUT $CLASS_PATH
+
 elif [ "$OP" = "delete" ]; then
 	NAME_VALID=0
 	while [ $NAME_VALID -ne 1 ]; do

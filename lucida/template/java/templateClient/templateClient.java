@@ -1,9 +1,6 @@
 //Java packages
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Properties;
 
 //Thrift java libraries 
 import org.apache.thrift.TException;
@@ -26,9 +23,9 @@ import com.mongodb.BasicDBObject;
 import thrift.*;
 
 /** 
-* A Template Client that get the upcoming events from Template Server and prints the results.
+* A template Client that get the upcoming events from template Server and prints the results.
 */
-public class TemplateClient {
+public class templateClient {
 	public static void main(String [] args) 
 			throws IOException{
 		// Get the port ID from Mongodb
@@ -40,7 +37,7 @@ public class TemplateClient {
 		DB db = mongoClient.getDB("lucida");
 		DBCollection coll = db.getCollection("service_info");
 		// TODO: change your service name
-		BasicDBObject query = new BasicDBObject("name", "yourservice");
+		BasicDBObject query = new BasicDBObject("name", "template");
 		DBCursor cursor = coll.find(query);
 		String port_str = cursor.next().get("port").toString();
 		mongoClient.close();
@@ -63,10 +60,10 @@ public class TemplateClient {
 		TProtocol protocol = new TBinaryProtocol(new TFramedTransport(transport));
 		LucidaService.Client client = new LucidaService.Client(protocol);
 		try {
-			// Talk to the Template server.
+			// Talk to the template server.
 			transport.open();
 			System.out.println(query_input_data);
-			System.out.println("///// Connecting to Your Service... /////");
+			System.out.println("///// Connecting to template... /////");
 			String results = client.infer(LUCID, query_spec);
 			System.out.println("///// Result: /////");
 			System.out.println(results);

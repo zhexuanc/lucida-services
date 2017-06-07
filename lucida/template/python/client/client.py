@@ -1,7 +1,7 @@
 import sys
 sys.path.append('../')
 
-from TemplateConfig import PORT
+from templateConfig import PORT
 from lucidatypes.ttypes import QueryInput, QuerySpec
 from lucidaservice import LucidaService
 
@@ -22,7 +22,7 @@ protocol = TBinaryProtocol.TBinaryProtocol(transport)
 client = LucidaService.Client(protocol)
 
 transport.open()
-print "///// Connecting to Your Service... /////"
+print "///// Connecting to template... /////"
 results = client.infer(LUCID, query_spec)
 print "///// Result: /////"
 print "%s" % results

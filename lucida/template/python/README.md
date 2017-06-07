@@ -1,6 +1,6 @@
-# Template microservice in Python
+# template microservice in Python
 
-This is a template of microservice built in lucida. To build your own service, follow the steps below.
+This is a guide of microservice built in lucida. To build your own service, follow the steps below.
 
 ## Major Dependencies
 

@@ -32,7 +32,7 @@ def main():
 
 	if op == 'add':
 		# check valid argument
-		if len(sys.argv) != 7:
+		if len(sys.argv) != 8:
 			print('[python error] wrong number of argument.')
 			exit(-1)
 
@@ -45,11 +45,12 @@ def main():
 
 		# list the attributes for the interface
 		post = {
-			"name" : sys.argv[2],
-			"acronym" : sys.argv[3],
-			"host" : sys.argv[4],
-			"port" : sys.argv[5],
-			"input" : sys.argv[6] 
+			"name": sys.argv[2],
+			"acronym": sys.argv[3],
+			"host": sys.argv[4],
+			"port": sys.argv[5],
+			"input": sys.argv[6],
+			"class_path": sys.argv[7]
 		}
 
 		# insert the service information into MongoDB

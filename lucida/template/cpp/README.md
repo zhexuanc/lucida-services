@@ -1,6 +1,6 @@
-# Template microservice in C++
+# template microservice in C++
 
-This is a template of microservice built in lucida. To build your own service, follow the steps below.
+This is a guide of microservice built in lucida. To build your own service, follow the steps below.
 
 ## Major Dependencies
 
@@ -28,7 +28,7 @@ Add the port information for your service in [`config.properties`](../../config.
 
 ### Step 3: implement your own create/learn/infer methods
 
-Implement your own create/learn/infer methods in [`server/TemplateHandler.cpp`](server/TemplateHandler.cpp). The spec of these three function is in the top-level [`README.md`](../../../README.md). Your are free to import different packages for your service, but remember to add the dependencies correctly.
+Implement your own create/learn/infer methods in [`server/templateHandler.cpp`](server/templateHandler.cpp). The spec of these three function is in the top-level [`README.md`](../../../README.md). Your are free to import different packages for your service, but remember to add the dependencies correctly.
 
 ### Step 4: update the `Makefile`
 
@@ -36,7 +36,7 @@ Update the [`Makefile`](Makefile). The default one has included the generating T
 
 ### Step 5: test your service individually
 
-Change the [test application](test/TemplateClient.cpp) to fit with your service. Remember to change the test query to make sure your service really works. After that, do the following steps under this directory to test your service.
+Change the [test application](test/templateClient.cpp) to fit with your service. Remember to change the test query to make sure your service really works. After that, do the following steps under this directory to test your service.
 
 - build 
 

@@ -3,7 +3,7 @@
 import sys
 sys.path.append('../')
 
-from TemplateConfig import *
+from templateConfig import *
 
 from lucidatypes.ttypes import QuerySpec
 from lucidaservice import LucidaService
@@ -15,7 +15,7 @@ from thrift.server import TServer
 
 # TODO: Adding modules your services needed
 
-class TemplateHandler(LucidaService.Iface):
+class templateHandler(LucidaService.Iface):
     def create(self, LUCID, spec):
         # TODO: Adding your own infer function. Check the top-level README to 
         # figure out each parameter represents.
@@ -42,7 +42,7 @@ class TemplateHandler(LucidaService.Iface):
         return answer_data
 
 # Set handler to our implementation and setup the server
-handler = TemplateHandler()
+handler = templateHandler()
 processor = LucidaService.Processor(handler)
 transport = TSocket.TServerSocket(port=PORT)
 tfactory = TTransport.TFramedTransportFactory()
@@ -51,5 +51,5 @@ server = TServer.TSimpleServer(processor, transport, tfactory, pfactory)
 
 # Display useful information on the command center and start the server
 # Change 'XXX' into your service's acronym
-print 'XXX at port %d' % PORT
+print 'TPL at port %d' % PORT
 server.serve()

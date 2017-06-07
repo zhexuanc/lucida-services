@@ -1,6 +1,6 @@
-# Template microservice in Java
+# template microservice in Java
 
-This is a template of microservice built in lucida. To build your own service, follow the steps below.
+This is a guide of microservice built in lucida. To build your own service, follow the steps below.
 
 ## Major Dependencies
 
@@ -9,7 +9,7 @@ This is a template of microservice built in lucida. To build your own service, f
 # Structure
 
 - `src/main/java/template/`: implementation of the template server
-- `TemplateClient/`: implementation of the template testing client
+- `templateClient/`: implementation of the template testing client
 
 ### Step 0: design your service workflow
 
@@ -36,7 +36,7 @@ Update the [`Makefile`](Makefile) and [`build.gradle`](build.gradle). The defaul
 
 ### Step 5: test your service individually
 
-Change the [test application](TemplateClient/TemplateClient.java) to fit with your service. Remember to change the test query to make sure your service really works. After that, do the following steps under this directory to test your service.
+Change the [test application](templateClient/templateClient.java) to fit with your service. Remember to change the test query to make sure your service really works. After that, do the following steps under this directory to test your service.
 
 - build 
 

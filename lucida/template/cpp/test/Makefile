@@ -4,15 +4,7 @@ CXXFLAGS = 		-std=c++11 \
 				-fPIC 
 CXXFLAGS += $(shell if [ `lsb_release -a 2>/dev/null | grep -Poe "(?<=\s)\d+(?=[\d\.]+$$)"` -gt 14 ]; then echo "-std=c++14"; fi;)
 
-LINKFLAGS =     -lopencv_core \
-				-lopencv_highgui \
-				-lopencv_imgproc \
-				-lopencv_nonfree \
-				-lopencv_flann \
-				-lopencv_objdetect \
-				-lopencv_features2d \
-				-lopencv_gpu \
-				-lrt \
+LINKFLAGS =     -lrt \
 				-lprotobuf \
 				-ltesseract \
 				-pthread \

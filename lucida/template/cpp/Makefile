@@ -18,14 +18,5 @@ clean:
 	make clean ; \
 	cd ..;
 
-docker:
-	cp ../lucidaservice.thrift .; \
-	cp ../lucidatypes.thrift .; \
-	cp ../../Makefile.common .; \
-	docker build -t lucida_template .; \
-	rm lucidaservice.thrift; \
-	rm lucidatypes.thrift; \
-	rm Makefile.common;
-
 %:
 	@:

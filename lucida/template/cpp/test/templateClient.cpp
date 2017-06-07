@@ -47,7 +47,7 @@ int main(int argc, char* argv[]) {
 	cout << "Connection is ok" << endl;
 	// TODO: change your service name
 	auto_ptr<mongo::DBClientCursor> cursor = conn.query(
-			"lucida.service_info", MONGO_QUERY("name" << "yourservice"));
+			"lucida.service_info", MONGO_QUERY("name" << "template"));
 	BSONObj q;
 	int port = 0;
 	while (cursor->more()) {
@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
 	query_input.tags.push_back(to_string(port));
 	query_input.tags.push_back("0");
 	query_spec.content.push_back(query_input);
-	cout << "///// Connecting to Your Service... /////"  << endl;
+	cout << "///// Connecting to template... /////"  << endl;
 	auto result = client.future_infer("Clinc", std::move(query_spec)).then(
 			[=](folly::Try<std::string>&& t) mutable {
 		cout << "///// Result: /////\n" << t.value() << endl;

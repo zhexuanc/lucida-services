@@ -1,5 +1,5 @@
 .gradle
 build
-TemplateClient/thrift
+templateClient/thrift
 src/main/java/thrift
-TemplateClient/*.class
+templateClient/*.class

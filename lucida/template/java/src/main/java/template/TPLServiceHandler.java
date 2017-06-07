@@ -14,14 +14,14 @@ import thrift.*;
  * method defined in the thrift file is handled by the
  * corresponding method here.
  */
-public class TEServiceHandler {
+public class TPLServiceHandler {
 	public static void print(String s) {
 		synchronized (System.out) {
 			System.out.println(s);
 		}
 	}
 
-	public static class SyncTEServiceHandler implements LucidaService.Iface {
+	public static class SyncTPLServiceHandler implements LucidaService.Iface {
 		/**
 		 * TODO: Implement your own create function for your service.
 		 * @param LUCID ID of Lucida user
@@ -58,11 +58,11 @@ public class TEServiceHandler {
 	    }
 	}
 
-	public static class AsyncTEServiceHandler implements LucidaService.AsyncIface {
-		private SyncTEServiceHandler handler;
+	public static class AsyncTPLServiceHandler implements LucidaService.AsyncIface {
+		private SyncTPLServiceHandler handler;
 
-		public AsyncTEServiceHandler() {
-			handler = new SyncTEServiceHandler();
+		public AsyncTPLServiceHandler() {
+			handler = new SyncTPLServiceHandler();
 		}
 
 		@Override

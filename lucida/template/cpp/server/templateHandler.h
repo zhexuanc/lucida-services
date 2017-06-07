@@ -17,9 +17,9 @@ extern std::mutex cout_lock_cpp;
 	)
 
 namespace cpp2 {
-class TemplateHandler : virtual public LucidaServiceSvIf {
+class templateHandler : virtual public LucidaServiceSvIf {
 public:
-	TemplateHandler();
+	templateHandler();
 
 	folly::Future<folly::Unit> future_create
 	(std::unique_ptr<std::string> LUCID,

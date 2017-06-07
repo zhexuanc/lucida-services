@@ -1,13 +1,10 @@
 package template;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.Properties;
 import org.apache.thrift.TProcessor;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.server.TNonblockingServer;
@@ -40,7 +37,7 @@ import thrift.*;
 /**
  * Starts the template server and listens for requests.
  */
-public class TemplateDaemon {
+public class templateDaemon {
 	public static void main(String [] args) 
 			throws TTransportException, IOException, InterruptedException {	
 		// Get the port ID from Mongodb
@@ -52,14 +49,14 @@ public class TemplateDaemon {
 		DB db = mongoClient.getDB("lucida");
 		DBCollection coll = db.getCollection("service_info");
 		// TODO: change your service
-		BasicDBObject query = new BasicDBObject("name", "yourservice");
+		BasicDBObject query = new BasicDBObject("name", "template");
 		DBCursor cursor = coll.find(query);
 		String port_str = cursor.next().get("port").toString();
 		mongoClient.close();
 		Integer port = Integer.valueOf(port_str);
 
 		TProcessor proc = new LucidaService.AsyncProcessor(
-				new TEServiceHandler.AsyncTEServiceHandler());
+				new TPLServiceHandler.AsyncTPLServiceHandler());
 		TNonblockingServerTransport transport = new TNonblockingServerSocket(port);
 		TThreadedSelectorServer.Args arguments = new TThreadedSelectorServer.Args(transport)
 		.processor(proc)	
@@ -67,7 +64,7 @@ public class TemplateDaemon {
 		.transportFactory(new TFramedTransport.Factory());
 		final TThreadedSelectorServer server = new TThreadedSelectorServer(arguments);
 		// TODO: Change XXX into your service's acronym
-		System.out.println("XXX at port " + port_str);
+		System.out.println("TPL at port " + port_str);
 		server.serve();
 	}
 }

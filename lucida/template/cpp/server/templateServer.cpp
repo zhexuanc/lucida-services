@@ -7,7 +7,7 @@ DEFINE_int32(num_of_threads,
 		4,
 		"Number of threads (default: 4)");
 
-#include "TemplateHandler.h"
+#include "templateHandler.h"
 #include "mongo/client/dbclient.h"
 #include <folly/init/Init.h>
 
@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) {
 	print("Connection is ok");
 	// TODO: change your service name
 	auto_ptr<DBClientCursor> cursor = conn.query(
-			"lucida.service_info", MONGO_QUERY("name" << "yourservice"));
+			"lucida.service_info", MONGO_QUERY("name" << "template"));
 	BSONObj p;
 	int port = 0;
 	while (cursor->more()) {
@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
 		port = atoi(port_str.c_str());
 	}
 
-	auto handler = std::make_shared<TemplateHandler>();
+	auto handler = std::make_shared<templateHandler>();
 	auto server = folly::make_unique<ThriftServer>();
 
 	server->setPort(port);
@@ -60,7 +60,7 @@ int main(int argc, char* argv[]) {
 	server->setIdleTimeout(std::chrono::milliseconds(0));
 	server->setTaskExpireTime(std::chrono::milliseconds(0));
 
-	cout << "XXX at port " << to_string(port) << endl;
+	cout << "TPL at port " << to_string(port) << endl;
 	server->serve();
 
 	return 0;

@@ -1,5 +1,5 @@
 """
-This a template for how to add your own microservice into Lucida interface
+This a guide for how to add your own microservice into Lucida interface
 """
 
 # Server Port number (necessary for every microservice server)
@@ -15,7 +15,7 @@ else:
     db = MongoClient().lucida
 
 collection = db.service_info
-result = collection.find_one({"name" : "yourservice"})
+result = collection.find_one({"name" : "template"})
 PORT = int(result["port"])
 
 # TODO: Other configuration for your own service

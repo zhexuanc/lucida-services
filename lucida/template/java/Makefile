@@ -14,18 +14,18 @@ thrift:
     fi
 
 client:
-	cd TemplateClient/ && ./compile-Template-client.sh
+	cd templateClient/ && ./compile-template-client.sh
 
 start_server: 
 	./gradlew run 
 
 start_test: 
-	cd TemplateClient; ./start-Template-client.sh 
+	cd templateClient; ./start-template-client.sh 
 
 clean:
 	rm -rf src/main/java/thrift ; \
-	rm -rf TemplateClient/thrift ; \
-	rm -rf TemplateClient/*.class ; \
+	rm -rf templateClient/thrift ; \
+	rm -rf templateClient/*.class ; \
 	rm -rf build;
 
 .PHONY:	all thrift gradle start_server start_test clean
