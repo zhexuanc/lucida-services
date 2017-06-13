@@ -81,6 +81,10 @@ if [ "$OP" = "add" ]; then
 	echo "### Specify the programming language you want to you in your programming. If C++/Java/Python, then template will be provided."
 	printf "### Enter the programming language: "
 	read LAN
+	LAN="$(tr [A-Z] [a-z] <<< "$LAN")"
+	if [ "$LAN" = "c++" ]; then
+		LAN="cpp"
+	fi
 
 	echo ""
 	HOST_PORT_VALID=1
@@ -128,6 +132,19 @@ if [ "$OP" = "add" ]; then
 		fi
 	done
 
+	echo ""
+	LEARN_VALID=1
+	while [ $LEARN_VALID -ne -0 ]; do
+		echo "Specify the learn type of your service (text, image or none)"
+		printf "### Enter the learn type: "
+		read LEARN
+		if [ "$LEARN" = "" ]; then
+			echo "[Error] Service learn type cannot be empty! Please try another one!"
+		else
+			LEARN_VALID=0
+		fi
+	done
+
 	if [ "$LAN" = "cpp" -o "$LAN" = "java" -o "$LAN" = "python" ]; then
 		# do copy template folder of cpp to lucida
 		cd ../lucida ; \
@@ -152,7 +169,13 @@ if [ "$OP" = "add" ]; then
 	fi
 
 	cd ../tools
-	python service_mongo.py add $NAME $ACN $HOST $PORT $INPUT $CLASS_PATH
+	python service_mongo.py add $NAME $ACN $HOST $PORT $INPUT $LEARN $CLASS_PATH
+	if [ $? = 0 ]; then
+		echo "[Info] Service registration succeed!"
+	else
+		rm -rf ../lucida/"$NAME"
+		echo "[Error] Service registration fail!"
+	fi
 
 elif [ "$OP" = "delete" ]; then
 	NAME_VALID=0

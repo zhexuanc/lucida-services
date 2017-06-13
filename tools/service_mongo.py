@@ -2,7 +2,7 @@
 
 """
 Insert the service information into MongoDB
-6/6/2017
+Zhexuan Chen 6/6/2017
 """
 
 # Standard imports
@@ -32,14 +32,14 @@ def main():
 
 	if op == 'add':
 		# check valid argument
-		if len(sys.argv) != 8:
+		if len(sys.argv) != 9:
 			print('[python error] wrong number of argument.')
 			exit(-1)
 
 		# check if current service is in MongoDB
 		count = collection.count({'name': sys.argv[2]})
 		if count != 0:
-			#collection.delete_many({"name" : sys.argv[1]})
+			#collection.delete_many({"name" : sys.argv[2]})
 			print('[python error] service already in MongoDB.')
 			exit(1)
 
@@ -50,7 +50,8 @@ def main():
 			"host": sys.argv[4],
 			"port": sys.argv[5],
 			"input": sys.argv[6],
-			"class_path": sys.argv[7]
+			"learn": sys.argv[7],
+			"class_path": sys.argv[8]
 		}
 
 		# insert the service information into MongoDB
@@ -66,10 +67,10 @@ def main():
 		# check if current service is in MongoDB
 		count = collection.count({sys.argv[2]: sys.argv[3]})
 		if count != 0:
-			print('[python error] service already in MongoDB.')
+			print('[python info] service already in MongoDB.')
 			exit(1)
 		else:
-			print('[python info] service name check pass.')
+			print('[python info] service ' + sys.argv[2] + ' check pass.')
 			return 0
 
 	elif op == 'check_host_port':
@@ -81,10 +82,10 @@ def main():
 		# check if current service is in MongoDB
 		count = collection.count({'host': sys.argv[2], 'port': sys.argv[3]})
 		if count != 0:
-			print('[python error] service already in MongoDB.')
+			print('[python info] service already in MongoDB.')
 			exit(1)
 		else:
-			print('[python info] service name check pass.')
+			print('[python info] service host/port check pass.')
 			return 0
 
 	elif op == 'delete':
@@ -95,7 +96,7 @@ def main():
 
 		# check if current service is in MongoDB
 		count = collection.count({'name': sys.argv[2]})
-		if count != 1:
+		if count == 0:
 			print('[python error] service not exists in MongoDB.')
 			exit(1)
 
